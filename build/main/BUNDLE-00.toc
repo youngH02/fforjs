@@ -1,3 +1,1 @@
-([('main',
-   '/Users/jyoung/PycharmProjects/pythonProject/dist/main',
-   'EXECUTABLE')],)
+([('main', '/Users/jyoung/PycharmProjects/forjsCap/dist/main', 'EXECUTABLE')],)

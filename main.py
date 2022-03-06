@@ -6,11 +6,7 @@
 import pyautogui
 import os
 from pynput import keyboard
-#import keyboard
-import tkinter as tk
 from tkinter import *
-
-from tkinter import simpledialog
 from tkinter.filedialog import askdirectory
 #자동완성 cmd shift space
 
@@ -25,7 +21,13 @@ def save_name():
         output_path = '%s/%s%d%s' % (dir, filename, uniq, file_ext)  # 파일명(1) 파일명(2)...
         uniq += 1
 
-def on_press(key):
+#def on_press(key):
+    # try:
+    #     print(f'알파벳 \'{key.char}\' 눌림')
+    # except AttributeError:
+    #     print(f'특수키 {key} 눌림')
+
+def on_release(key):
     global startX, startY, endX, endY
 
     if key == keyboard.Key.f9:
@@ -38,15 +40,9 @@ def on_press(key):
 
     if key == keyboard.Key.f3:
         save_name()
-        pyautogui.screenshot(output_path, region=(startX,startY,480*2.54,320*2.54))
+        pyautogui.screenshot(output_path, region=(startX, startY, 480 * 2.54, 320 * 2.54))
         print(f'알파벳 \'{key}\' 캡처완료-----{output_path}')
-    # try:
-    #     print(f'알파벳 \'{key.char}\' 눌림')
-    # except AttributeError:
-    #     print(f'특수키 {key} 눌림')
 
-def on_release(key):
-    print(f'키보드 {key} 풀림')
     if key == keyboard.Key.f7:
         # esc 키에서 풀림
         window.destroy()
@@ -57,16 +53,15 @@ def mouse_drag(startX, startY, endX, endY, time):
     pyautogui.dragTo(endX, endY, 1) #드래그 포인트
 
 if __name__ == '__main__' :
-    print('start!!!!!!!!!')
     global filename, file_ext, output_path, dir
     global startX, startY, endX, endY
     filename = 'sample_merge'  # 파일명 고정값
     file_ext = '.png'  # 파일 형식
     dir = '/Users/jyoung/Downloads'
     output_path = '%s/%s%s' % (dir, filename, file_ext)
-    print('start!!!!!!!!!')
+
     window = Tk() # tkinter 객체 생성
-    listener = keyboard.Listener(on_press=on_press, on_release=on_release)
+    listener = keyboard.Listener(on_release=on_release)
     listener.start()
 
     # 파일명 변수 생성
@@ -96,19 +91,6 @@ if __name__ == '__main__' :
 
     def closing():
         window.destroy()
-
-    def start():
-        mouse_position1.configure(text="X=" + str(startX) + ", Y=" + str(startX))
-        mouse_position2.configure(text="X=" + str(endX) + ", Y=" + str(endY))
-
-        # while (1):
-        #     startX, startY = pyautogui.position()
-        #     startX, startY = pyautogui.position()
-        #     pyautogui.sleep(1)
-        #     statusbar.configure(text="X=" + str(startX) + ", Y=" + str(startX))
-        #     print(startX, startY)
-        #     if (startX == 10):
-        #         break;
 
     # 경로와 파일명 입력 GUI
     window.title("forjs capture")
@@ -148,4 +130,7 @@ if __name__ == '__main__' :
 
     # with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     #     listener.join()
+
+    #pyinstaller --icon=/Users/jyoung/Downloads/test.ico --onefile -w main.py
+
 
