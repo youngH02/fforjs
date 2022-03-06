@@ -57,13 +57,14 @@ def mouse_drag(startX, startY, endX, endY, time):
     pyautogui.dragTo(endX, endY, 1) #드래그 포인트
 
 if __name__ == '__main__' :
+    print('start!!!!!!!!!')
     global filename, file_ext, output_path, dir
     global startX, startY, endX, endY
     filename = 'sample_merge'  # 파일명 고정값
     file_ext = '.png'  # 파일 형식
     dir = '/Users/jyoung/Downloads'
     output_path = '%s/%s%s' % (dir, filename, file_ext)
-
+    print('start!!!!!!!!!')
     window = Tk() # tkinter 객체 생성
     listener = keyboard.Listener(on_press=on_press, on_release=on_release)
     listener.start()
