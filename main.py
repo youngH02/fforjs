@@ -6,8 +6,10 @@
 import pyautogui
 import os
 from pynput import keyboard
+#import keyboard
 from tkinter import *
 from tkinter.filedialog import askdirectory
+#import pygame, sys
 #자동완성 cmd shift space
 
 def save_name():
@@ -29,7 +31,7 @@ def save_name():
 
 def on_release(key):
     global startX, startY, endX, endY
-
+    press_status.configure(text='눌린버튼 : '+str({key}))
     if key == keyboard.Key.f9:
         startX, startY = pyautogui.position()
         mouse_position1.configure(text="X=" + str(startX) + ", Y=" + str(startX))
@@ -40,8 +42,12 @@ def on_release(key):
 
     if key == keyboard.Key.f3:
         save_name()
-        pyautogui.screenshot(output_path, region=(startX, startY, 480, 320))
-        print(f'알파벳 \'{key}\' 캡처완료-----{output_path}')
+        try : 
+            pyautogui.screenshot(output_path, region=(startX, startY, endX, endY))
+            save_status.configure(text='저장완료 : '+output_path)
+           # print(f'알파벳 \'{key}\' 캡처완료-----{output_path}')
+        except : 
+           save_status.configure(text='저장실패 : '+output_path)
 
     if key == keyboard.Key.f7:
         # esc 키에서 풀림
@@ -57,7 +63,8 @@ if __name__ == '__main__' :
     global startX, startY, endX, endY
     filename = 'sample'  # 파일명 고정값
     file_ext = '.png'  # 파일 형식
-    dir = 'D:\2022 ACOMS\환자 CT\계측 사진\group1'
+    dir = r'D:\2022ACOMS\CT\PIC\group1'
+    
     output_path = '%s/%s%s' % (dir, filename, file_ext)
 
     window = Tk() # tkinter 객체 생성
@@ -85,6 +92,9 @@ if __name__ == '__main__' :
         output_path = '%s/%s%s' % (dir, filename, file_ext)
         output_label.configure(text=output_path)
 
+    def restart():
+        listener.start()
+
     def move(X,Y):
        # pyautogui.moveTo(X,Y)
         print(X,Y)
@@ -94,7 +104,7 @@ if __name__ == '__main__' :
 
     # 경로와 파일명 입력 GUI
     window.title("forjs capture")
-   # window.geometry("600x500")
+    #window.geometry("600x500")
     Label(window, text="경로선택 : ").grid(row=0, column=0, padx=10, pady=10)
     selected_dir=Label(window, text=dir)
     selected_dir.grid(row=0, column=1, padx=10, pady=10)
@@ -122,8 +132,12 @@ if __name__ == '__main__' :
     Label(window, text="종료위치저장(F10)").grid(row=7, column=2, padx=10, pady=10)
 
    # Button(window, text="현재위치", command=start).grid(row=8, column=1, padx=10, pady=10)
-    Label(window, text="영역캡처: F3").grid(row=8, column=1, padx=10, pady=10)
+    Button(window, text="영역캡처: F3", command=restart).grid(row=8, column=1, padx=10, pady=10)
     Button(window, text="종료(F7)", command=closing).grid(row=8, column=2, padx=10, pady=10)
+    press_status=Label(window, text="눌린버튼 : ")
+    press_status.grid(row=9, column=0, padx=10, pady=10)
+    save_status=Label(window, text="저장상태 : ")
+    save_status.grid(row=9, column=1, padx=10, pady=10)
 
     window.mainloop()
 
@@ -131,7 +145,7 @@ if __name__ == '__main__' :
     # with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     #     listener.join()
 
-    #pyinstaller --icon=D:\Project\forjsCap\fforjs-1/test.ico --onefile -w main.py
     #pyinstaller --icon=D:\Project\forjsCap\fforjs-1\test.ico --onefile -w main.py
+    #pyinstaller --onefile -w main.py
 
 
