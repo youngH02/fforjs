@@ -40,7 +40,7 @@ def on_release(key):
 
     if key == keyboard.Key.f3:
         save_name()
-        pyautogui.screenshot(output_path, region=(startX, startY, 480 * 2.54, 320 * 2.54))
+        pyautogui.screenshot(output_path, region=(startX, startY, 480, 320))
         print(f'알파벳 \'{key}\' 캡처완료-----{output_path}')
 
     if key == keyboard.Key.f7:
@@ -55,9 +55,9 @@ def mouse_drag(startX, startY, endX, endY, time):
 if __name__ == '__main__' :
     global filename, file_ext, output_path, dir
     global startX, startY, endX, endY
-    filename = 'sample_merge'  # 파일명 고정값
+    filename = 'sample'  # 파일명 고정값
     file_ext = '.png'  # 파일 형식
-    dir = '/Users/jyoung/Downloads'
+    dir = 'D:\2022 ACOMS\환자 CT\계측 사진\group1'
     output_path = '%s/%s%s' % (dir, filename, file_ext)
 
     window = Tk() # tkinter 객체 생성
@@ -94,7 +94,7 @@ if __name__ == '__main__' :
 
     # 경로와 파일명 입력 GUI
     window.title("forjs capture")
-    window.geometry("480x320")
+   # window.geometry("600x500")
     Label(window, text="경로선택 : ").grid(row=0, column=0, padx=10, pady=10)
     selected_dir=Label(window, text=dir)
     selected_dir.grid(row=0, column=1, padx=10, pady=10)
@@ -106,7 +106,7 @@ if __name__ == '__main__' :
     Button(window, text="확인", command=input_filename).grid(row=1, column=2, padx=10, pady=10)
 
     Label(window, text="저장예시 : ").grid(row=3, column=0, padx=10, pady=10)
-    output_label=Label(window, text="없음")
+    output_label=Label(window, text=output_path)
     output_label.grid(row=3, column=1, padx=10, pady=10)
 
     Label(window, text="캡처 볌위 :").grid(row=4, column=0, padx=10, pady=10)
@@ -131,6 +131,7 @@ if __name__ == '__main__' :
     # with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
     #     listener.join()
 
-    #pyinstaller --icon=/Users/jyoung/Downloads/test.ico --onefile -w main.py
+    #pyinstaller --icon=D:\Project\forjsCap\fforjs-1/test.ico --onefile -w main.py
+    #pyinstaller --icon=D:\Project\forjsCap\fforjs-1\test.ico --onefile -w main.py
 
 
