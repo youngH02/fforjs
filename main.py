@@ -10,7 +10,7 @@ from pynput import keyboard
 from tkinter import *
 from tkinter.filedialog import askdirectory
 #import pygame, sys
-#자동완성 cmd shift space
+#자동완성 cmd shift space ggg
 
 def save_name():
     #input_path = r'/Users/jyoung/Downloads/'
